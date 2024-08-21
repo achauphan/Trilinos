@@ -4,6 +4,7 @@ on:
       types:
         - opened
         - synchronize
+        - labeled
     pull_request_review:
       types: 
         - submitted
