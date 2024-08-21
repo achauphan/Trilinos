@@ -21,12 +21,14 @@ jobs:
             should_skip_AT2: ${{ steps.skip_check.outputs.should_skip_AT2 }}
         steps:
         - id: skip_check
-        - uses: fkirc/skip-duplicate-actions@v5
-        - with:
+          uses: fkirc/skip-duplicate-actions@v5
+          with:
             skip_after_successful_duplicate: 'true'
 
     build-and-test:
         name: Build and test changes
+        needs: pre-checks
+        if: needs.pre_checks.outputs.should_skip_AT2 != 'true'
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v4
