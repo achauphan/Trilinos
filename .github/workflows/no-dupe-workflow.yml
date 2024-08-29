@@ -34,6 +34,8 @@ jobs:
         steps:
         - uses: actions/checkout@v4
         - run: |
+            pwd
+            ls
             echo "pretending to build some cool code!"
             sleep 30s
             echo "finished building cool code!"
