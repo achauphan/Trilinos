@@ -25,6 +25,7 @@ jobs:
           uses: fkirc/skip-duplicate-actions@v5
           with:
             skip_after_successful_duplicate: 'true'
+            do_not_skip: ''
 
     build-and-test:
         name: Build and test changes
