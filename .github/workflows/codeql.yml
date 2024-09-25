@@ -57,9 +57,19 @@ jobs:
           query-filters:
           - exclude:
              tags: cpp/integer-multiplication-cast-to-long
-           
+    - name: env
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        env
+    - name: module list
+      shell: bash -l
+      run: |
+        module list
+        printenv PATH
     - if: matrix.build-mode == 'manual'
-      name: Configure Trilinos            
+      name: Configure Trilinos
+      shell: bash -l
       run: |
           mkdir -p trilinos_build
           cd trilinos_build 
