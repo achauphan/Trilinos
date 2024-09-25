@@ -63,13 +63,13 @@ jobs:
       run: |
         env
     - name: module list
-      shell: bash -l
+      shell: bash -l {0}
       run: |
         module list
         printenv PATH
     - if: matrix.build-mode == 'manual'
       name: Configure Trilinos
-      shell: bash -l
+      shell: bash -l {0}
       run: |
           mkdir -p trilinos_build
           cd trilinos_build 
