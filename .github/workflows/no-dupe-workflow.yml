@@ -1,0 +1,42 @@
+name: Test fixing duplicate workflows
+on:
+    pull_request:
+      types:
+        - opened
+        - synchronize
+        - labeled
+    pull_request_review:
+      types: 
+        - submitted
+      branches:
+      - master
+      - develop
+    workflow_dispatch:
+
+
+
+jobs:
+    pre-checks:
+        runs-on: ubuntu-latest
+        outputs:
+            should_skip: ${{ steps.skip_check.outputs.should_skip }}
+        steps:
+        - id: skip_check
+          uses: fkirc/skip-duplicate-actions@v5
+          with:
+            skip_after_successful_duplicate: 'true'
+            do_not_skip: ''
+
+    build-and-test:
+        name: Build and test changes
+        needs: pre-checks
+        if: needs.pre-checks.outputs.should_skip != 'true'
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4
+        - run: |
+            pwd
+            ls
+            echo "pretending to build some cool code!"
+            sleep 3s
+            echo "finished building cool code!"
