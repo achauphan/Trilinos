@@ -73,7 +73,7 @@ jobs:
           bash -lc "${GITHUB_WORKSPACE}/packages/framework/get_dependencies.sh --container"
     - if: matrix.build-mode == 'manual'
       name: Configure Trilinos
-      shell: bash -l {0}
+      shell: bash -lc {0}
       run: |
           mkdir -p trilinos_build
           cd trilinos_build
