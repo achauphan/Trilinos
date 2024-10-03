@@ -72,25 +72,16 @@ jobs:
       run: |
           bash -lc "${GITHUB_WORKSPACE}/packages/framework/get_dependencies.sh --container"
     - if: matrix.build-mode == 'manual'
-      name: Configure Trilinos
+      name: Configure and Build Trilinos
       shell: bash -lc {0}
       run: |
           mkdir -p trilinos_build
           cd trilinos_build
 
           source ${GITHUB_WORKSPACE}/packages/framework/GenConfig/gen-config.sh --force --cmake-fragment fragment.cmake rhel8_gcc-openmpi_debug_shared_no-kokkos-arch_no-asan_complex_no-fpic_mpi_no-pt_no-rdc_no-uvm_deprecated-on_no-package-enables
-      
-
-      
-    - if: matrix.build-mode == 'manual'
-      name: Build Trilinos
-      run: |
-          cd trilinos_build 
-          source ${GITHUB_WORKSPACE}/packages/framework/GenConfig/LoadEnv/load-env.sh --force rhel8_gcc-openmpi
           cmake -C fragment.cmake -DTrilinos_ENABLE_Tpetra=ON -DTrilinos_ENABLE_MueLu=ON ..
-          
           ninja -j 16
-      
+            
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@294a9d92911152fe08befb9ec03e240add280cb3 # v3.26.8
       with:
