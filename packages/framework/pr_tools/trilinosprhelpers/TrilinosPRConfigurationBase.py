@@ -501,7 +501,7 @@ class TrilinosPRConfigurationBase(object):
         elif self.arg_dashboard_build_name != "__UNKNOWN__":
             output = self.arg_dashboard_build_name
         else:
-            output = self.arg_pr_genconfig_job_name            
+            output = self.arg_pr_genconfig_job_name
         return output
 
 
