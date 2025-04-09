@@ -14,6 +14,21 @@
 #include <string>
 #include <vector>
 
+static void extracted(const Teuchos::ParameterList &allocNodalQuants, panzer_stk::STK_Interface &mesh) {
+for(Teuchos::ParameterList::ConstIterator itr=allocNodalQuants.begin();
+      itr!=allocNodalQuants.end();++itr) {
+    const std::string & blockId = itr->first;
+    const std::string & fields = Teuchos::any_cast<std::string>(itr->second.getAny());
+    std::vector<std::string> tokens;
+
+    // break up comma seperated fields
+    panzer::StringTokenizer(tokens,fields,",",true);
+
+    for(std::size_t i=0;i<tokens.size();i++)
+      mesh.addSolutionField(tokens[i],blockId);
+  }
+}
+
 void mini_em::addFieldsToMesh(panzer_stk::STK_Interface & mesh,
                                const Teuchos::ParameterList & output_list)
 {
@@ -83,18 +98,5 @@ void mini_em::addFieldsToMesh(panzer_stk::STK_Interface & mesh,
   }
 
   const Teuchos::ParameterList & allocNodalQuants = output_list.sublist("Allocate Nodal Quantities");
-  for(Teuchos::ParameterList::ConstIterator itr=allocNodalQuants.begin();
-      itr!=allocNodalQuants.end();++itr) {
-    const std::string & blockId = itr->first;
-    const std::string & fields = Teuchos::any_cast<std::string>(itr->second.getAny());
-    std::vector<std::string> tokens;
-
-    // break up comma seperated fields
-    panzer::StringTokenizer(tokens,fields,",",true);
-
-    for(std::size_t i=0;i<tokens.size();i++)
-      mesh.addSolutionField(tokens[i],blockId);
-  }
-
+  extracted(allocNodalQuants, mesh);
 }
-
