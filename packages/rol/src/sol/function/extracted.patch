@@ -1,0 +1,31 @@
+diff --git a/packages/rol/src/sol/function/ROL_SimulatedBoundConstraint.hpp b/packages/rol/src/sol/function/ROL_SimulatedBoundConstraint.hpp
+index c71e1fa5e12..906d148e298 100644
+--- a/packages/rol/src/sol/function/ROL_SimulatedBoundConstraint.hpp
++++ b/packages/rol/src/sol/function/ROL_SimulatedBoundConstraint.hpp
+@@ -121,14 +121,17 @@ public:
+     return u_;
+   }
+ 
+-  bool isFeasible( const Vector<Real> &v ) {
+-    bool feasible = true;
+-    if(bnd_->isActivated()) {
++  void extracted() {
++if(bnd_->isActivated()) {
+       for( int k=0; k<sampler_->numMySamples(); ++k ) {
+         feasible = feasible && bnd_->isFeasible(getVector(v,k));
+       }
+     }
+-    return feasible;
++}
++
++bool isFeasible( const Vector<Real> &v ) {
++    bool feasible = true;
++    extracted();    return feasible;
+   }
+ 
+   void applyInverseScalingFunction(Vector<Real> &dv, const Vector<Real> &v, const Vector<Real> &x, const Vector<Real> &g) const {
+@@ -149,4 +152,3 @@ public:
+ }; // class SimulatedBoundConstraint
+ } // namespace ROL
+ 
+-#endif
