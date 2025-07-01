@@ -3160,6 +3160,7 @@ void BulkData::add_closure_entities(const Ghosting &ghosting, const EntityProcVe
             conditionally_add_entity_to_ghosting_set(ghosting, i->first, i->second, entitiesWithClosure);
 
             stk::mesh::EntityRank entityRank = entity_rank(i->first);
+	    #pragma rose_outline
             for(stk::mesh::EntityRank irank = stk::topology::NODE_RANK; irank < entityRank; ++irank)
             {
                 unsigned numEntities = num_connectivity(i->first, irank);

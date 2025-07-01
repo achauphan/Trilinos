@@ -325,6 +325,7 @@ void ReconstructionSidesetUpdater::tag_sideset(Entity entity, const Part& part)
   if (m_bulkData.bucket_ptr(entity) != nullptr)
   {
     bool ownedOrShared = m_bulkData.bucket(entity).owned() || m_bulkData.bucket(entity).shared();
+    #pragma rose_outline
     if(is_part_a_sideset(m_bulkData, part) && ownedOrShared) {
       m_stkSideSets.insert(&part);
     }

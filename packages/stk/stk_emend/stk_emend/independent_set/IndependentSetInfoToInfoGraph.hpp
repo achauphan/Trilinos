@@ -32,6 +32,7 @@ public:
                             const FUNC_TO_CALL &func) const
     {
         for(const typename INFO_TYPE::ExclusionIdentifierType &conflictingId : mInfos[iInfo].get_conflicting_ids())
+	#pragma rose_outline
             for(size_t iInfoNbr : mConflictingIdsToContainingInfos.at(conflictingId))
                 if(iInfo != iInfoNbr)
                     func(iInfoNbr);

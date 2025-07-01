@@ -398,6 +398,7 @@ void unpackCommunicationsAndStoreSharedEntityToProcPair(const int numProcs, cons
             size_t numSharingProcs = 0;
             dataFromAnotherProc.unpack<stk::mesh::EntityKey>(key);
             dataFromAnotherProc.unpack<size_t>(numSharingProcs);
+	    #pragma rose_outline
             for(size_t j = 0; j < numSharingProcs; j++)
             {
                 int sharingProc = -1;

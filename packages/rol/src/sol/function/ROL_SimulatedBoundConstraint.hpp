@@ -123,6 +123,7 @@ public:
 
   bool isFeasible( const Vector<Real> &v ) {
     bool feasible = true;
+    #pragma rose_outline
     if(bnd_->isActivated()) {
       for( int k=0; k<sampler_->numMySamples(); ++k ) {
         feasible = feasible && bnd_->isFeasible(getVector(v,k));

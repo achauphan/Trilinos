@@ -71,6 +71,7 @@ void evaluateCurl_withSens_vector(int numCells,
 
     for (int cell=0; cell<numCells; cell++) {
       for (int pt=0; pt<numPoints; pt++) {
+	#pragma rose_outline
         for (int d=0; d<spaceDim; d++) {
           // first initialize to the right thing (prevents over writing with 0)
           // then loop over one less basis function
