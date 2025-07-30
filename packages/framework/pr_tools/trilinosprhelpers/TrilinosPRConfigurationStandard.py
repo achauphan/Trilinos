@@ -65,9 +65,9 @@ class TrilinosPRConfigurationStandard(TrilinosPRConfigurationBase):
 
         # Execute the call to ctest.
         verbosity_flag = "-VV"
-        if "BUILD_NUMBER" in os.environ:
-            print("Running under Jenkins, keeping output less verbose to avoid space issues")
-            verbosity_flag = "-V"
+        #if "BUILD_NUMBER" in os.environ:
+        #    print("Running under Jenkins, keeping output less verbose to avoid space issues")
+        #    verbosity_flag = "-V"
 
         cmd = ['ctest',
                verbosity_flag,
