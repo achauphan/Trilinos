@@ -10,7 +10,7 @@ function configure_ccache() {
 
     envvar_set_or_create CCACHE_NODISABLE true
     envvar_set_or_create CCACHE_DIR '/fgs/trilinos/ccache/cache'
-    envvar_set_or_create CCACHE_BASEDIR "${WORKSPACE:?}"
+#    envvar_set_or_create CCACHE_BASEDIR "${WORKSPACE:?}"
     envvar_set_or_create CCACHE_NOHARDLINK true
     envvar_set_or_create CCACHE_UMASK 077
     envvar_set_or_create CCACHE_MAXSIZE 100G
