@@ -52,6 +52,11 @@ def parse_args():
         "dev_version",
         help="Development version string in format MAJOR.MINOR.PATCH-dev (e.g., 17.1.0-dev)"
     )
+    pre.add_argument(
+        "--base-branch",
+        default="develop",
+        help="Branch to create the release branch from (default: develop)"
+    )
     add_common_args(pre)
     pre.set_defaults(func=pre_release)
 
@@ -120,16 +125,18 @@ def pre_release(args):
         raise ValueError(
             f"Rel version {args.rel_version} must be less than dev version {args.dev_version}!")
 
-    main_branch = "master"
     dev_branch = "develop"
+    base_branch = args.base_branch
 
     fork_owner = get_remote_owner(args.fork, git_root)
 
     #####################################
-    # Fetch latest master and develop
+    # Fetch latest base branch for release
 
-    fetch_branch(dev_branch, git_root, args.origin, merge=True)
-    fetch_branch(main_branch, git_root, args.origin, merge=True)
+    fetch_branch(base_branch, git_root, args.origin, merge=True)
+    if base_branch != dev_branch:
+        fetch_branch(dev_branch, git_root, args.origin, merge=True)
+    checkout_branch(base_branch, git_root)
 
     #####################################
     # Checkout and push new release branch
