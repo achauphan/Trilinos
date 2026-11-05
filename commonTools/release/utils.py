@@ -66,7 +66,7 @@ def fetch_branch(branch: str, repo_path: str, remote: str, merge: bool=False) ->
         branch: Name of the branch to fetch
         repo_path: Path to the git repository (default: current directory)
         remote: Name of the remote to fetch from
-        merge: If True, merge the fetched branch with local branch after fetching
+        merge: If True, merge the fetched branch with local branch after fetching and return back to the original branch.
     """
     try:
         git_root = get_git_root(repo_path)
@@ -75,15 +75,15 @@ def fetch_branch(branch: str, repo_path: str, remote: str, merge: bool=False) ->
         rem = git_repo.remote(remote)
         rem.fetch(branch)
         if merge:
-            if branch in [b.name for b in git_repo.branches]:
-                current_branch = git_repo.active_branch.name
+            current_branch = git_repo.active_branch.name
 
+            if branch in [b.name for b in git_repo.branches]:
                 if current_branch != branch:
                     git_repo.git.checkout(branch)
-
                 git_repo.git.merge(f"{remote}/{branch}")
             else:
                 git_repo.git.checkout("-b", branch, f"{remote}/{branch}")
+            git_repo.git.checkout(current_branch)
     except git.InvalidGitRepositoryError as e:
         raise ValueError(f"Invalid git repository at {repo_path}: {e}") from e
     except Exception as e:
