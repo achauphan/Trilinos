@@ -23,7 +23,7 @@ python3 -m pip install -r requirements.txt
 The release process is split into subcommands so each phase can be run independently.
 
 ```
-release.py pre-release <rel_version> <dev_version> [--dir DIR] [--debug]
+release.py pre-release <rel_version> <dev_version> [--base-branch BRANCH] [--dir DIR] [--debug]
 release.py release     <rel_branch>                [--dir DIR] [--debug]
 release.py patch       <rel_branch>                [--dir DIR] [--debug]
 ```
