@@ -44,7 +44,7 @@ jobs:
       skip-create-packageenables: true
       extra-pr-driver-args: --extra-configure-args=-C;${GITHUB_WORKSPACE}/packages/framework/cmake-fragments/kokkos-integration/hip.cmake
       max-cores-allowed: 128
-      num-concurrent-tests: 16
+      num-concurrent-tests: 8
       slots-per-gpu: 8
       setup-commands: |
         source /spack/share/spack/setup-env.sh
